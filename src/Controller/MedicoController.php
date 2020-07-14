@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Medico;
+use App\Service\MedicoFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,6 +18,11 @@ class MedicoController extends AbstractController
 {
 
     /**
+     * @var MedicoFactory
+     */
+    private MedicoFactory $medicoFactory;
+
+    /**
      * @var EntityManagerInterface
      */
     private EntityManagerInterface $entityManagerInterface;
@@ -24,10 +30,12 @@ class MedicoController extends AbstractController
     /**
      * MedicoController constructor.
      * @param EntityManagerInterface $entityManagerInterface
+     * @param MedicoFactory $medicoFactory
      */
-    public function __construct(EntityManagerInterface $entityManagerInterface)
+    public function __construct(EntityManagerInterface $entityManagerInterface, MedicoFactory $medicoFactory)
     {
         $this->entityManagerInterface = $entityManagerInterface;
+        $this->medicoFactory = $medicoFactory;
     }
 
     /**
@@ -39,11 +47,7 @@ class MedicoController extends AbstractController
     public function create(Request $request): JsonResponse
     {
         $body = $request->getContent();
-        $json = json_decode($body);
-
-        $medico = new Medico();
-        $medico->setCrm($json->crm);
-        $medico->setNome($json->nome);
+        $medico = $this->medicoFactory->criarMedico($body);
 
         $this->entityManagerInterface->persist($medico);
         $this->entityManagerInterface->flush();
@@ -64,22 +68,65 @@ class MedicoController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param int $id
      * @return JsonResponse
      *
      * @Route("/medico/{id}", methods={"GET"})
      */
-    public function read(Request $request): JsonResponse
+    public function read(int $id): JsonResponse
     {
-        $id = $request->get('id');
         $medico = $this->getDoctrine()->getRepository(Medico::class)->find($id);
 
-        $httpCode = JsonResponse::HTTP_OK;
-
         if (is_null($medico)) {
-            $httpCode = JsonResponse::HTTP_NOT_FOUND;
+            return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
         }
 
-        return new JsonResponse($medico, $httpCode);
+        return new JsonResponse($medico->getNome());
+    }
+
+    /**
+     * @param int $id
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @Route("/medico/{id}", methods={"PUT"})
+     */
+    public function update(int $id, Request $request): JsonResponse
+    {
+        $body = $request->getContent();
+        $novoMedico = $this->medicoFactory->criarMedico($body);
+
+        $medico = $this->getDoctrine()->getRepository(Medico::class)->find($id);
+
+        if (is_null($medico)) {
+            return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $medico->setCrm($novoMedico->getCrm());
+        $medico->setNome($novoMedico->getNome());
+
+        $this->entityManagerInterface->flush();
+
+        return new JsonResponse($medico);
+    }
+
+    /**
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @Route("/medico/{id}", methods={"DELETE"})
+     */
+    public function delete(int $id): JsonResponse
+    {
+        $medico = $this->getDoctrine()->getRepository(Medico::class)->find($id);
+
+        if (is_null($medico)) {
+            return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $this->entityManagerInterface->remove($medico);
+        $this->entityManagerInterface->flush();
+
+        return new JsonResponse("", JsonResponse::HTTP_OK);
     }
 }
