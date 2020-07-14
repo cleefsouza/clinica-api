@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Medico;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class MedicoController
  * @package App\Controller
  */
-class MedicoController
+class MedicoController extends AbstractController
 {
 
     /**
@@ -48,5 +49,37 @@ class MedicoController
         $this->entityManagerInterface->flush();
 
         return new JsonResponse($medico);
+    }
+
+    /**
+     * @return JsonResponse
+     *
+     * @Route("/medico", methods={"GET"})
+     */
+    public function readAll(): JsonResponse
+    {
+        $medicos = $this->getDoctrine()->getRepository(Medico::class)->findAll();
+
+        return new JsonResponse($medicos);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @Route("/medico/{id}", methods={"GET"})
+     */
+    public function read(Request $request): JsonResponse
+    {
+        $id = $request->get('id');
+        $medico = $this->getDoctrine()->getRepository(Medico::class)->find($id);
+
+        $httpCode = JsonResponse::HTTP_OK;
+
+        if (is_null($medico)) {
+            $httpCode = JsonResponse::HTTP_NOT_FOUND;
+        }
+
+        return new JsonResponse($medico, $httpCode);
     }
 }

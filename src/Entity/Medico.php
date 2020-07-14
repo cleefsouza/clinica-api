@@ -9,22 +9,29 @@ use Doctrine\ORM\Mapping as ORM;
  * @package App\Entity
  *
  * @ORM\Entity()
+ * @ORM\Table(name="medico")
  */
 class Medico
 {
 
     /**
      * @var int
+     *
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
     private int $id;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private string $crm;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private string $nome;
 
