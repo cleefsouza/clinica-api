@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Medico;
+use App\Repository\MedicoRepository;
 use App\Service\MedicoFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,17 +26,26 @@ class MedicoController extends AbstractController
     /**
      * @var EntityManagerInterface
      */
-    private EntityManagerInterface $entityManagerInterface;
+    private EntityManagerInterface $entityManager;
+    /**
+     * @var MedicoRepository
+     */
+    private MedicoRepository $medicoRepository;
 
     /**
      * MedicoController constructor.
-     * @param EntityManagerInterface $entityManagerInterface
+     * @param EntityManagerInterface $entityManager
      * @param MedicoFactory $medicoFactory
+     * @param MedicoRepository $medicoRepository
      */
-    public function __construct(EntityManagerInterface $entityManagerInterface, MedicoFactory $medicoFactory)
-    {
-        $this->entityManagerInterface = $entityManagerInterface;
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        MedicoFactory $medicoFactory,
+        MedicoRepository $medicoRepository
+    ) {
+        $this->entityManager = $entityManager;
         $this->medicoFactory = $medicoFactory;
+        $this->medicoRepository = $medicoRepository;
     }
 
     /**
@@ -49,8 +59,8 @@ class MedicoController extends AbstractController
         $body = $request->getContent();
         $medico = $this->medicoFactory->criarMedico($body);
 
-        $this->entityManagerInterface->persist($medico);
-        $this->entityManagerInterface->flush();
+        $this->entityManager->persist($medico);
+        $this->entityManager->flush();
 
         return new JsonResponse($medico);
     }
@@ -62,7 +72,7 @@ class MedicoController extends AbstractController
      */
     public function readAll(): JsonResponse
     {
-        $medicos = $this->getDoctrine()->getRepository(Medico::class)->findAll();
+        $medicos = $this->medicoRepository->findAll();
 
         return new JsonResponse($medicos);
     }
@@ -75,7 +85,7 @@ class MedicoController extends AbstractController
      */
     public function read(int $id): JsonResponse
     {
-        $medico = $this->getDoctrine()->getRepository(Medico::class)->find($id);
+        $medico = $this->medicoRepository->find($id);
 
         if (is_null($medico)) {
             return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
@@ -96,7 +106,7 @@ class MedicoController extends AbstractController
         $body = $request->getContent();
         $novoMedico = $this->medicoFactory->criarMedico($body);
 
-        $medico = $this->getDoctrine()->getRepository(Medico::class)->find($id);
+        $medico = $this->medicoRepository->find($id);
 
         if (is_null($medico)) {
             return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
@@ -105,7 +115,7 @@ class MedicoController extends AbstractController
         $medico->setCrm($novoMedico->getCrm());
         $medico->setNome($novoMedico->getNome());
 
-        $this->entityManagerInterface->flush();
+        $this->entityManager->flush();
 
         return new JsonResponse($medico);
     }
@@ -118,15 +128,15 @@ class MedicoController extends AbstractController
      */
     public function delete(int $id): JsonResponse
     {
-        $medico = $this->getDoctrine()->getRepository(Medico::class)->find($id);
+        $medico = $this->medicoRepository->find($id);
 
         if (is_null($medico)) {
             return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
         }
 
-        $this->entityManagerInterface->remove($medico);
-        $this->entityManagerInterface->flush();
+        $this->entityManager->remove($medico);
+        $this->entityManager->flush();
 
-        return new JsonResponse("", JsonResponse::HTTP_OK);
+        return new JsonResponse("", JsonResponse::HTTP_NO_CONTENT);
     }
 }
