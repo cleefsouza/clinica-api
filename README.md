@@ -1,4 +1,4 @@
-# Clínica API :hospital:
+# Clínica API :syringe:
 > Simples API para cadastro de médicos e especialidades, colocando em prática as aulas de Symfony 4 na Alura
 
 ### Requisitos
