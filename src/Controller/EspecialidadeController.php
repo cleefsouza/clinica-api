@@ -3,14 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Especialidade;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\EspecialidadeRepository;
 use App\Service\EspecialidadeService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\{
-    JsonResponse,
-    Request
-};
 
 /**
  * Class EspecialidadeController

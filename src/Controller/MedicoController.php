@@ -7,10 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\MedicoRepository;
 use App\Service\MedicoService;
-use Symfony\Component\HttpFoundation\{
-    JsonResponse,
-    Request
-};
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class MedicoController
