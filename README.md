@@ -8,23 +8,31 @@
 
 ### Executando
 - Clone o projeto:
-  ```
-  git@github.com:cleefsouza/clinica-api.git
+  ```shell
+  git clone git@github.com:cleefsouza/clinica-api.git
   ```
 
 - Execute o seguinte comando na raiz do projeto:
-  ```
+  ```shell
   composer install
   ```
 
 - Execute usando o `php server` ou `symfony cli`:
-  ```
+  ```shell
   php -S localhost:8000 -t public
   # ou
   symfony server:start
   ```
 
-- Acesse `http://localhost:8000`
+- Acesse `http://localhost:8000/` para o seguinte retorno:
+    ```json
+    {
+        "nome": "clinica-api",
+        "descricao": "Cadastro de médicos e especialidades",
+        "uri": "http://localhost:8000/",
+        "method": "GET"
+    }
+    ```
 
 ### Swagger
 ... 
