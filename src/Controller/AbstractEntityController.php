@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\ServiceInterface\EntityServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Common\Persistence\ObjectRepository;
+use App\ServiceInterface\EntityServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\{
     JsonResponse,

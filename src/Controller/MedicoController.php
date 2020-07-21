@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Medico;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\MedicoRepository;
 use App\Service\MedicoService;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\Medico;
 
 /**
  * Class MedicoController

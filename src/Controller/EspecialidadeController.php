@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Especialidade;
 use App\Repository\EspecialidadeRepository;
-use App\Service\EspecialidadeService;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\EspecialidadeService;
+use App\Entity\Especialidade;
 
 /**
  * Class EspecialidadeController
