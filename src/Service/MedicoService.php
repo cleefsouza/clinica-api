@@ -4,12 +4,13 @@ namespace App\Service;
 
 use App\Entity\Medico;
 use App\Repository\EspecialidadeRepository;
+use App\ServiceInterface\EntityServiceInterface;
 
 /**
- * Class MedicoFactory
+ * Class MedicoService
  * @package App\Service
  */
-class MedicoFactory
+class MedicoService implements EntityServiceInterface
 {
     /**
      * @var EspecialidadeRepository
@@ -17,7 +18,7 @@ class MedicoFactory
     private EspecialidadeRepository $especialidadeRepository;
 
     /**
-     * MedicoFactory constructor.
+     * MedicoService constructor.
      * @param EspecialidadeRepository $especialidadeRepository
      */
     public function __construct(EspecialidadeRepository $especialidadeRepository)
@@ -29,7 +30,7 @@ class MedicoFactory
      * @param string $json
      * @return Medico
      */
-    public function criarMedico(string $json): Medico
+    public function createEntity(string $json): Medico
     {
         $data = json_decode($json);
 

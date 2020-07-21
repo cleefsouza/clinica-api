@@ -3,19 +3,20 @@
 namespace App\Service;
 
 use App\Entity\Especialidade;
+use App\ServiceInterface\EntityServiceInterface;
 
 /**
- * Class EspecialidadeFactory
+ * Class EspecialidadeService
  * @package App\Service
  */
-class EspecialidadeFactory
+class EspecialidadeService implements EntityServiceInterface
 {
 
     /**
      * @param string $json
      * @return Especialidade
      */
-    public function criarEspecialidade(string $json): Especialidade
+    public function createEntity(string $json): Especialidade
     {
         $data = json_decode($json);
 
