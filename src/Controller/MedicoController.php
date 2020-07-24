@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Utils\FiltroRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,13 +22,15 @@ class MedicoController extends AbstractEntityController
      * @param EntityManagerInterface $entityManager
      * @param MedicoService $medicoService
      * @param MedicoRepository $medicoRepository
+     * @param FiltroRequest $filtroRequest
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         MedicoService $medicoService,
-        MedicoRepository $medicoRepository
+        MedicoRepository $medicoRepository,
+        FiltroRequest $filtroRequest
     ) {
-        parent::__construct($medicoRepository, $entityManager, $medicoService);
+        parent::__construct($medicoRepository, $entityManager, $medicoService, $filtroRequest);
     }
 
     /**

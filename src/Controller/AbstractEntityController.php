@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Utils\FiltroRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Common\Persistence\ObjectRepository;
 use App\ServiceInterface\EntityServiceInterface;
@@ -34,19 +35,27 @@ abstract class AbstractEntityController extends AbstractController
     protected EntityServiceInterface $entityService;
 
     /**
+     * @var FiltroRequest
+     */
+    protected FiltroRequest $filtroRequest;
+
+    /**
      * AbstractEntityController constructor.
      * @param ObjectRepository $repository
      * @param EntityManagerInterface $entityManager
      * @param EntityServiceInterface $entityService
+     * @param FiltroRequest $filtroRequest
      */
     public function __construct(
         ObjectRepository $repository,
         EntityManagerInterface $entityManager,
-        EntityServiceInterface $entityService
+        EntityServiceInterface $entityService,
+        FiltroRequest $filtroRequest
     ) {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
         $this->entityService = $entityService;
+        $this->filtroRequest = $filtroRequest;
     }
 
     /**
@@ -125,8 +134,10 @@ abstract class AbstractEntityController extends AbstractController
      */
     public function readAll(Request $request): JsonResponse
     {
-        $order = $request->query->get('order');
-        $entityList = $this->repository->findBy([], $order);
+        $entityList = $this->repository->findBy(
+            $this->filtroRequest->getFiltros($request),
+            $this->filtroRequest->getOrder($request)
+        );
 
         if (empty($entityList)) {
             return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
