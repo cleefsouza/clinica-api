@@ -16,12 +16,18 @@ class FiltroRequest
      */
     private function getDadosUrl(Request $request): ?array
     {
-        $order = $request->query->get("order");
-
         $filtros = $request->query->all();
+
+        $order = array_key_exists("order", $filtros) ? $filtros["order"] : null;
         unset($filtros["order"]);
 
-        return [$order, $filtros];
+        $page = array_key_exists("page", $filtros) ? $filtros["page"] : 1;
+        unset($filtros["page"]);
+
+        $limit = array_key_exists("limit", $filtros) ? $filtros["limit"] : 5;
+        unset($filtros["limit"]);
+
+        return [$order, $filtros, $page, $limit];
     }
 
     /**
@@ -30,7 +36,7 @@ class FiltroRequest
      */
     public function getOrder(Request $request): ?array
     {
-        [$order,] = $this->getDadosUrl($request);
+        [$order, ] = $this->getDadosUrl($request);
 
         return $order;
     }
@@ -44,5 +50,17 @@ class FiltroRequest
         [, $filtros] = $this->getDadosUrl($request);
 
         return $filtros;
+    }
+
+    /**
+     * @param Request $request
+     * @return array|null
+     */
+    public function getPages(Request $request): ?array
+    {
+        [, , $page, $limit] = $this->getDadosUrl($request);
+        $offset = ($page - 1) * $limit;
+
+        return [$limit, $offset];
     }
 }

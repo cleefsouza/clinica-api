@@ -134,10 +134,11 @@ abstract class AbstractEntityController extends AbstractController
      */
     public function readAll(Request $request): JsonResponse
     {
-        $entityList = $this->repository->findBy(
-            $this->filtroRequest->getFiltros($request),
-            $this->filtroRequest->getOrder($request)
-        );
+        $filtros = $this->filtroRequest->getFiltros($request);
+        $order = $this->filtroRequest->getOrder($request);
+        [$limit, $offset] = $this->filtroRequest->getPages($request);
+
+        $entityList = $this->repository->findBy($filtros, $order, $limit, $offset);
 
         if (empty($entityList)) {
             return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
