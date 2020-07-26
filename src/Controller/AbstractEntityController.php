@@ -160,7 +160,7 @@ abstract class AbstractEntityController extends AbstractController
         $entityList = $this->repository->findBy($filtros, $order, $limit, $offset);
 
         if (empty($entityList)) {
-            return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
+            return new JsonResponse("", JsonResponse::HTTP_NO_CONTENT);
         }
 
         $response = new ResponseService(
