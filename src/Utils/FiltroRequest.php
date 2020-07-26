@@ -61,6 +61,6 @@ class FiltroRequest
         [, , $page, $limit] = $this->getDadosUrl($request);
         $offset = ($page - 1) * $limit;
 
-        return [$limit, $offset];
+        return [$page, $limit, $offset];
     }
 }

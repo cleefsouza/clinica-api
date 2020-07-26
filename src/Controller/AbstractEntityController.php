@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\ResponseService;
 use App\Utils\FiltroRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Common\Persistence\ObjectRepository;
@@ -70,7 +71,13 @@ abstract class AbstractEntityController extends AbstractController
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
 
-        return new JsonResponse($entity, JsonResponse::HTTP_OK);
+        $response = new ResponseService(
+            $entity,
+            JsonResponse::HTTP_OK,
+            true
+        );
+
+        return $response->getResponse();
     }
 
     /**
@@ -85,7 +92,13 @@ abstract class AbstractEntityController extends AbstractController
             return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
         }
 
-        return new JsonResponse($entity, JsonResponse::HTTP_OK);
+        $response = new ResponseService(
+            $entity,
+            JsonResponse::HTTP_OK,
+            true
+        );
+
+        return $response->getResponse();
     }
 
     /**
@@ -107,7 +120,13 @@ abstract class AbstractEntityController extends AbstractController
         $this->updateEntity($entity, $newEntity);
         $this->entityManager->flush();
 
-        return new JsonResponse($entity);
+        $response = new ResponseService(
+            $entity,
+            JsonResponse::HTTP_OK,
+            true
+        );
+
+        return $response->getResponse();
     }
 
     /**
@@ -136,7 +155,7 @@ abstract class AbstractEntityController extends AbstractController
     {
         $filtros = $this->filtroRequest->getFiltros($request);
         $order = $this->filtroRequest->getOrder($request);
-        [$limit, $offset] = $this->filtroRequest->getPages($request);
+        [$page, $limit, $offset] = $this->filtroRequest->getPages($request);
 
         $entityList = $this->repository->findBy($filtros, $order, $limit, $offset);
 
@@ -144,7 +163,15 @@ abstract class AbstractEntityController extends AbstractController
             return new JsonResponse("", JsonResponse::HTTP_NOT_FOUND);
         }
 
-        return new JsonResponse($entityList, JsonResponse::HTTP_OK);
+        $response = new ResponseService(
+            $entityList,
+            JsonResponse::HTTP_OK,
+            true,
+            $page,
+            $limit
+        );
+
+        return $response->getResponse();
     }
 
     /**
