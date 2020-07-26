@@ -6,6 +6,12 @@
 - PHP 7.4
 - Symfony CLI (opcional)
 
+### Dependências:
+- Doctrine Fixtures
+- Firebase JWT
+- Symfony Maker
+- Symfony Secutiry
+
 ### Executando
 - Clone o projeto:
   ```shell
@@ -33,9 +39,6 @@
         "method": "GET"
     }
     ```
-
-### Swagger
-... 
 
 ### Autor <div id="autor"></div>
 Aryosvalldo Cleef ─ [linkedin](https://www.linkedin.com/in/aryosvalldo-cleef/) ─ [@cleefsouza](https://github.com/cleefsouza)
