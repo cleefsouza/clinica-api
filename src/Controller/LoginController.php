@@ -5,8 +5,7 @@ namespace App\Controller;
 use App\Repository\UsuarioRepository;
 use Firebase\JWT\JWT;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\{JsonResponse, Request};
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -63,7 +62,7 @@ class LoginController extends AbstractController
             );
         }
 
-        $token = JWT::encode(["username" => $usuario->getUsername()], "chave");
+        $token = JWT::encode(["username" => $usuario->getUsername()], "chave", 'HS256');
 
         return new JsonResponse(["access_token" => $token]);
     }
