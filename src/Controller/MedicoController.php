@@ -48,7 +48,6 @@ class MedicoController extends AbstractEntityController
     /**
      * @param int $id
      * @return JsonResponse
-     *
      * @Route("/medico/especialidade/{id}", methods={"GET"})
      */
     public function getMedicosPorEspecialidade(int $id): JsonResponse

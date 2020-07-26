@@ -19,7 +19,6 @@ class IndexController extends AbstractController
     /**
      * @param Request $request
      * @return JsonResponse
-     *
      * @Route("/", methods={"GET"})
      */
     public function __invoke(Request $request): JsonResponse
