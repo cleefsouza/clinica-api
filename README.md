@@ -1,37 +1,45 @@
 # :syringe: clinica-api
 > Simples API para cadastro de médicos e especialidades, colocando em prática as aulas de Symfony 4 na Alura
 
-### Requisitos
+### Índice
+- [Requisitos](#requisitos)
+- [Dependências](#dependencias)
+- [Executando](#executando)
+- [Recursos](#recursos)
+  - [Login](#login)
+  - [Médico](#medico)
+  - [Especialidade](#especialidade)
+- [Autor](#autor)
+- [Meta](#meta)
+
+### Requisitos <div id="requisitos"></div>
 - Composer
 - PHP 7.4
 - Symfony CLI (opcional)
 
-### Dependências:
+### Dependências <div id="dependencias"></div>
 - Doctrine Fixtures
 - Firebase JWT
 - Symfony Maker
 - Symfony Secutiry
 
-### Executando
+### Executando <div id="executando"></div>
 - Clone o projeto:
   ```shell
   git clone git@github.com:cleefsouza/clinica-api.git
   ```
-
 - Execute o seguinte comando na raiz do projeto:
   ```shell
   composer install
   ```
-
 - Execute usando o `php server` ou `symfony cli`:
   ```shell
   php -S localhost:8000 -t public
   # ou
   symfony server:start
   ```
-
 - Acesse `http://localhost:8000/` para o seguinte retorno:
-    ```json
+    ```json5
     {
         "nome": "clinica-api",
         "descricao": "Cadastro de médicos e especialidades",
@@ -39,7 +47,107 @@
         "method": "GET"
     }
     ```
+ 
+### Recursos <div id="recursos"></div>
 
+#### Login <div id="login"></div>
+
+##### `/login` Logar
+- Request
+    ```json5
+    /**
+     * POST /login
+     * Content-Type: application/json
+     * Host: localhost:8000
+     */
+    
+    {
+        "username": "usuario",
+        "password": "123456"
+    }
+    ```
+ - Response
+    ```json5
+    {
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew"
+    }
+    ```
+
+#### Médico <div id="medico"></div>
+
+##### `/medico` Adicionar médico
+- Request
+    ```json5
+    /**
+     * POST /medico
+     * Content-Type: application/json
+     * Host: localhost:8000
+     * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+     */
+    
+    {
+    	"crm": "CRM123",
+    	"nome": "Joaquim Monteiro de Sousa",
+    	"especialidade_id": 1
+    }
+    ```
+ - Response
+    ```json5
+    {
+        "conteudo": {
+            "id": 1,
+            "nome": "Joaquim Monteiro de Sousa",
+            "crm": "CRM123",
+            "especialidade_id": 1,
+            "_links": [
+                {
+                    "rel": "self",
+                    "path": "/medico/1"
+                },
+                {
+                    "rel": "especialidade",
+                    "path": "/especialidade/1"
+                }
+            ]
+        },
+        "status": 200,
+        "sucesso": true
+    }
+    ```
+
+##### `/medico/{id}` Buscar médico
+- Request
+    ```json5
+    /**
+     * POST /medico/1
+     * Content-Type: application/json
+     * Host: localhost:8000
+     * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+     */
+    ```
+ - Response
+    ```json5
+    {
+        "conteudo": {
+            "id": 1,
+            "nome": "Joaquim Monteiro de Sousa",
+            "crm": "CRM123",
+            "especialidade_id": 1,
+            "_links": [
+                {
+                    "rel": "self",
+                    "path": "/medico/1"
+                },
+                {
+                    "rel": "especialidade",
+                    "path": "/especialidade/1"
+                }
+            ]
+        },
+        "status": 200,
+        "sucesso": true
+    }
+    ```
 ### Autor <div id="autor"></div>
 Aryosvalldo Cleef ─ [linkedin](https://www.linkedin.com/in/aryosvalldo-cleef/) ─ [@cleefsouza](https://github.com/cleefsouza)
 
