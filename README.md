@@ -52,7 +52,7 @@
 
 #### Login <div id="login"></div>
 
-##### `/login` Logar
+##### `/login` Iniciar sessão
 - Request
     ```json5
     /**
@@ -114,7 +114,6 @@
         "sucesso": true
     }
     ```
-
 ##### `/medico/{id}` Buscar médico
 - Request
     ```json5
@@ -148,6 +147,146 @@
         "sucesso": true
     }
     ```
+##### `/medico/{id}` Atualizar médico
+- Request
+    ```json5
+    /**
+     * PUT /medico/1
+     * Content-Type: application/json
+     * Host: localhost:8000
+     * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+     */
+  
+      {
+        "crm": "CRM456",
+        "nome": "Joaquim Monteiro de Freitas",
+        "especialidade_id": 2
+      }
+    ```
+ - Response
+    ```json5
+    {
+        "conteudo": {
+            "id": 1,
+            "nome": "Joaquim Monteiro de Freitas",
+            "crm": "CRM123",
+            "especialidade_id": 2,
+            "_links": [
+                {
+                    "rel": "self",
+                    "path": "/medico/1"
+                },
+                {
+                    "rel": "especialidade",
+                    "path": "/especialidade/2"
+                }
+            ]
+        },
+        "status": 200,
+        "sucesso": true
+    }
+    ```  
+##### `/medico/{id}` Remover médico
+- Request
+    ```json5
+    /**
+     * DELETE /medico/1
+     * Content-Type: application/json
+     * Host: localhost:8000
+     * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+     */
+    ``` 
+
+##### `/medicos` Buscar todos os médicos
+- Request
+    ```json5
+    /**
+     * GET /medicos
+     *
+     * Parameters: ?page=1&limit=5&order[nome]=DESC
+     * page: número da página
+     * limit: limite por página
+     * nome|especialidade|crm: filtrar por campo
+     * order[campo]: ordenar por campo
+     * 
+     * Content-Type: application/json
+     * Host: localhost:8000
+     * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+     */
+    ```
+- Response
+    ```json5
+    {
+        "conteudo": [
+            {
+                "id": 1,
+                "nome": "Joaquim Monteiro de Sousa",
+                "crm": "CRM555",
+                "especialidade_id": 1,
+                "_links": [
+                    {
+                        "rel": "self",
+                        "path": "/medico/1"
+                    },
+                    {
+                        "rel": "especialidade",
+                        "path": "/especialidade/1"
+                    }
+                ]
+            },
+            {
+                ...
+            },
+            {
+                ...
+            }
+        ],
+        "status": 200,
+        "sucesso": true,
+        "pagina": 1,
+        "limite": 5
+    }
+    ``` 
+ ##### `/medico/especialidade/{id}` Buscar médicos por especialidade
+ - Request
+     ```json5
+     /**
+      * POST /medico/especialidade/1
+      * Content-Type: application/json
+      * Host: localhost:8000
+      * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+      */
+     ```
+  - Response
+    ```json5
+    {
+        "conteudo": [
+            {
+                "id": 1,
+                "nome": "Joaquim Monteiro de Sousa",
+                "crm": "CRM555",
+                "especialidade_id": 1,
+                "_links": [
+                    {
+                        "rel": "self",
+                        "path": "/medico/1"
+                    },
+                    {
+                        "rel": "especialidade",
+                        "path": "/especialidade/1"
+                    }
+                ]
+            },
+            {
+                ...
+            }
+        ],
+        "status": 200,
+        "sucesso": true,
+        "pagina": 1,
+        "limite": 5
+    }
+    ``` 
 ### Autor <div id="autor"></div>
 Aryosvalldo Cleef ─ [linkedin](https://www.linkedin.com/in/aryosvalldo-cleef/) ─ [@cleefsouza](https://github.com/cleefsouza)
 
