@@ -118,7 +118,7 @@
 - Request
     ```json5
     /**
-     * POST /medico/1
+     * GET /medico/1
      * Content-Type: application/json
      * Host: localhost:8000
      * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
@@ -287,6 +287,154 @@
         "limite": 5
     }
     ``` 
+
+#### Especialidade <div id="especialidade"></div>
+
+##### `/especialidade` Adicionar especialidade
+- Request
+    ```json5
+    /**
+     * POST /especialidade
+     * Content-Type: application/json
+     * Host: localhost:8000
+     * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+     */
+    
+    {
+       "descricao": "Cardiologia"
+    }
+    ```
+ - Response
+    ```json5
+    {
+        "conteudo": {
+           "id": 2,
+            "descricao": "Cardiologia",
+            "_links": [
+                {
+                    "rel": "self",
+                    "path": "/especialidade/1"
+                }
+            ]
+        },
+        "status": 200,
+        "sucesso": true
+    }
+    ```
+##### `/especialidade/{id}` Buscar especialidade
+- Request
+    ```json5
+    /**
+     * GET /especialidade/1
+     * Content-Type: application/json
+     * Host: localhost:8000
+     * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+     */
+    ```
+ - Response
+    ```json5
+    {
+        "conteudo": {
+           "id": 1,
+            "descricao": "Fisioterapia",
+            "_links": [
+                {
+                    "rel": "self",
+                    "path": "/especialidade/1"
+                }
+            ]
+        },
+        "status": 200,
+        "sucesso": true
+    }
+    ```
+##### `/especialidade/{id}` Atualizar especialidade
+- Request
+    ```json5
+    /**
+     * PUT /especialidade/1
+     * Content-Type: application/json
+     * Host: localhost:8000
+     * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+     */
+  
+      {
+      	"descricao": "Clínica Geral"
+      }
+    ```
+ - Response
+    ```json5
+    {
+        "conteudo": {
+           "id": 1,
+            "descricao": "Clínica Geral",
+            "_links": [
+                {
+                    "rel": "self",
+                    "path": "/especialidade/1"
+                }
+            ]
+        },
+        "status": 200,
+        "sucesso": true
+    }
+    ```  
+##### `/especialidade/{id}` Remover especialidade
+- Request
+    ```json5
+    /**
+     * DELETE /especialidade/1
+     * Content-Type: application/json
+     * Host: localhost:8000
+     * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+     */
+    ``` 
+
+##### `/especialidades` Buscar todas as especialidades
+- Request
+    ```json5
+    /**
+     * GET /especialidades
+     *
+     * Parameters: ?page=1&limit=5&order[nome]=DESC
+     * page: número da página
+     * limit: limite por página
+     * nome: filtrar por campo
+     * order[nome]: ordenar por campo
+     * 
+     * Content-Type: application/json
+     * Host: localhost:8000
+     * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
+     */
+    ```
+- Response
+    ```json5
+    {
+        "conteudo": [
+            {
+                "id": 1,
+                "descricao": "Fisioterapia",
+                "_links": [
+                    {
+                        "rel": "self",
+                        "path": "/especialidade/1"
+                    }
+                ]
+            },
+            {
+                ...
+            },
+            {
+                ...
+            }
+        ],
+        "status": 200,
+        "sucesso": true,
+        "pagina": 1,
+        "limite": 5
+    }
+    ``` 
+
 ### Autor <div id="autor"></div>
 Aryosvalldo Cleef ─ [linkedin](https://www.linkedin.com/in/aryosvalldo-cleef/) ─ [@cleefsouza](https://github.com/cleefsouza)
 
