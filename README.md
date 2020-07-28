@@ -69,7 +69,7 @@
  - Response
     ```json5
     {
-        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew"
+       "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew"
     }
     ```
 
@@ -86,9 +86,9 @@
      */
     
     {
-    	"crm": "CRM123",
-    	"nome": "Joaquim Monteiro de Sousa",
-    	"especialidade_id": 1
+        "crm": "CRM123",
+        "nome": "Joaquim Monteiro de Sousa",
+        "especialidade_id": 1
     }
     ```
  - Response
@@ -157,11 +157,11 @@
      * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
      */
   
-      {
+    {
         "crm": "CRM456",
         "nome": "Joaquim Monteiro de Freitas",
         "especialidade_id": 2
-      }
+    }
     ```
  - Response
     ```json5
@@ -358,9 +358,9 @@
      * Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8ifQ.Yytcv05WKMtD5T4-saEgpZxICv7Vhp6uCnfeP_N2Uew
      */
   
-      {
-      	"descricao": "Clínica Geral"
-      }
+    {
+        "descricao": "Clínica Geral"
+    }
     ```
  - Response
     ```json5
